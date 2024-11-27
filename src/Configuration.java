@@ -49,19 +49,21 @@ public class Configuration {
 
     //Method for validate the user inputs
     public boolean validate(){
+        //check if the number is a positive or not.
         if (totalTickets<0 || ticketCapacity<0 || retrievalRate<0 || releaseRate<0){
-            System.out.println("Please enter a positive number.");
+            System.out.println("Invalid input! Please enter a positive number.");
             return false;
         }
+        //ticket capacity should be higher than total ticket count.
         if (totalTickets>ticketCapacity){
-            System.out.println("Please enter a number smaller than the total ticket count.");
+            System.out.println("Invalid input! Please enter a number smaller than the total ticket count.");
             return false;
         }
+        //checks if the ticket release rate is lower than the ticket retrieval rate.
         if (retrievalRate<releaseRate){
-            System.out.println("Ticket release rate should be higher than ticket retrieval rate.");
+            System.out.println("Invalid input! Ticket release rate should be higher than ticket retrieval rate.");
             return false;
         }
-
         return true;
     }
 }
