@@ -24,10 +24,16 @@ public class Main{
             } else {
                 System.out.println("Inputs are invalid.");
             }
+
+            // Initialized the TicketPool with the configuration object
+            TicketPool ticketPool = new TicketPool(configuration);
+
         } catch (InputMismatchException e) {
             System.out.println("Invalid input! Please enter an integer.");
         } catch (Exception e) {
             System.out.println("Error occurred.");
         }
+
+
     }
 }
