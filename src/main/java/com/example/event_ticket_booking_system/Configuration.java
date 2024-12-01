@@ -3,6 +3,9 @@ package com.example.event_ticket_booking_system;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Configuration {
     //Initializing the attributes
     private int totalTickets;
@@ -70,5 +73,18 @@ public class Configuration {
             return false;
         }
         return true;
+    }
+
+    public void SaveInJson(){
+        //creates an instance
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try(FileWriter fileWriter = new FileWriter("Ticketing System")){
+            gson.toJson(this, fileWriter); //Converts to Json and writes in the fille
+            System.out.println("Saved ticket information to  Json file.");
+        }
+        catch (IOException e){
+            System.out.println("Error occurred during the saving process"+ e.getMessage());
+        }
     }
 }
