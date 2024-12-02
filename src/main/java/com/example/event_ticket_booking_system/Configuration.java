@@ -79,7 +79,7 @@ public class Configuration {
         //creates an instance
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try(FileWriter fileWriter = new FileWriter("Ticketing System")){
+        try(FileWriter fileWriter = new FileWriter("Ticketing_System.json")){
             gson.toJson(this, fileWriter); //Converts to Json and writes in the fille
             System.out.println("Saved ticket information to  Json file.");
         }

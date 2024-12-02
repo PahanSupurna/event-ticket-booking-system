@@ -32,7 +32,7 @@ public class TicketPool {
     }
 
     // Method for buying tickets in the system by customers.
-    public synchronized String buyTicket() throws InterruptedException{
+    public synchronized void buyTicket() throws InterruptedException{
         // Checks if there is no available tickets in the system.
         while (ticketQueue.isEmpty()){
             System.out.println("There are no available tickets in the system. Please wait!");
@@ -42,6 +42,5 @@ public class TicketPool {
         String ticket = ticketQueue.poll(); //Removes the ticket from the system
         System.out.println(ticket + "is successfully purchased. Number of tickets remaining in the system = "+ ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
-        return ticket;
     }
 }
