@@ -68,7 +68,7 @@ public class Configuration {
             return false;
         }
         //checks if the ticket release rate is lower than the ticket retrieval rate.
-        if (retrievalRate < releaseRate) {
+        if (retrievalRate > releaseRate) {
             System.out.println("Invalid input! Ticket release rate should be higher than ticket retrieval rate.");
             return false;
         }
