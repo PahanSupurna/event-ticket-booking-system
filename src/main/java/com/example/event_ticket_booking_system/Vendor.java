@@ -14,15 +14,25 @@ public class Vendor implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < totalTickets; i++) {
-            try {
-                //Adds the ticket to the pool
-                ticketPool.addTicket();
-                //Waiting time before releasing the next ticket
-                Thread.sleep(releaseRate * 1000L);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        try {
+            while (true) {
+                synchronized (ticketPool) {
+                    if (ticketPool.getSoldTickets() >= totalTickets) {
+                        break; // Stop if total tickets have been sold
+                    }
+
+                    if (ticketPool.getSoldTickets() < totalTickets) {
+                        ticketPool.addTicket();
+                        System.out.println("Ticket Number " + ticketPool.getTicketNumber() + " Successfully added to the system.");
+                    } else {
+                        System.out.println("Ticket system is full, please wait till a customer buys a ticket.");
+                        ticketPool.wait(); // Wait until a customer buys a ticket and frees space
+                    }
+                }
+                Thread.sleep(releaseRate*1000L);
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 }

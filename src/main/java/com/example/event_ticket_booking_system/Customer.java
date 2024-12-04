@@ -1,6 +1,6 @@
 package com.example.event_ticket_booking_system;
 
-public class Customer implements Runnable{
+public class Customer implements Runnable {
     private final TicketPool ticketPool;
     private final int totalTickets;
     private final int retrievalRate;
@@ -12,15 +12,21 @@ public class Customer implements Runnable{
     }
 
     @Override
-    public void run(){
-        for (int i = 0; i < totalTickets; i++) {
-            try {
-                ticketPool.buyTicket();
-                Thread.sleep(retrievalRate * 1000L);
+    public void run() {
+        try {
+            synchronized (ticketPool) {
+                while (ticketPool.getSoldTickets() < totalTickets) {
+                    // Attempt to buy a ticket
+                    ticketPool.buyTicket();
+                    // Notify any waiting thread that a ticket is available (optional)
+                    ticketPool.notifyAll();
+
+                    // Wait for the next cycle based on retrievalRate
+                    ticketPool.wait(retrievalRate * 1000L);
+                }
             }
-            catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();  // Handle interrupt properly
         }
     }
 }

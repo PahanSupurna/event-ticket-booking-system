@@ -8,16 +8,23 @@ public class TicketPool {
     private final Queue<String> ticketQueue; //Queue to store tickets in the system
     private final Configuration configuration; // Object of Configuration class
     private int ticketNumber; //To get the ticket number for displaying.
+    private int soldTickets; //To keep the track of the number of tickets that were sold.
 
     // Constructor
     public TicketPool (Configuration configuration){
         this.ticketQueue = new LinkedList<>();
         this.configuration = configuration;
         this.ticketNumber = 0;
+        this.soldTickets = 0;
     }
 
     // Method for adding the tickets to the system by Vendors.
     public synchronized void addTicket() throws InterruptedException{
+        while (soldTickets >= configuration.getTotalTickets()) {
+            notifyAll(); // Notify all threads to avoid deadlock
+            return; // Stop further ticket addition
+        }
+
         //checks if the number of tickets in the system is higher than the maximum capacity.
         while (ticketQueue.size() >= configuration.getTicketCapacity()){
             System.out.println("Ticket system is full, please wait till a customer buys a ticket.");
@@ -40,7 +47,16 @@ public class TicketPool {
         }
 
         String ticket = ticketQueue.poll(); //Removes the ticket from the system
+        soldTickets++;
         System.out.println(ticket + " is successfully purchased. Number of tickets remaining in the system = "+ ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
+    }
+    
+    public synchronized int getSoldTickets() {
+        return soldTickets;
+    }
+
+    public synchronized int getTicketNumber() {
+        return ticketNumber;
     }
 }
