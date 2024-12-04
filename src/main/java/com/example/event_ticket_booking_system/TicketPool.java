@@ -27,7 +27,7 @@ public class TicketPool {
         ticketNumber ++;
         String ticket = "Ticket Number " + ticketNumber; //creates the ticket name to display
         ticketQueue.offer(ticket); //Adds the ticket to the queue
-        System.out.println(ticket + "Successfully added to the system. Number of tickets in the system = "+ ticketQueue.size());
+        System.out.println(ticket + " Successfully added to the system. Number of tickets in the system = "+ ticketQueue.size());
         notifyAll(); //Notifies the customers about the added tickets.
     }
 
@@ -40,7 +40,7 @@ public class TicketPool {
         }
 
         String ticket = ticketQueue.poll(); //Removes the ticket from the system
-        System.out.println(ticket + "is successfully purchased. Number of tickets remaining in the system = "+ ticketQueue.size());
+        System.out.println(ticket + " is successfully purchased. Number of tickets remaining in the system = "+ ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
 }
