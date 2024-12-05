@@ -17,17 +17,11 @@ public class Vendor implements Runnable {
         try {
             while (true) {
                 synchronized (ticketPool) {
-                    if (ticketPool.getSoldTickets() >= totalTickets) {
+                    if (ticketPool.allTicketsSold()) {
                         break; // Stop if total tickets have been sold
                     }
 
-                    if (ticketPool.getSoldTickets() < totalTickets) {
-                        ticketPool.addTicket();
-                        System.out.println("Ticket Number " + ticketPool.getTicketNumber() + " Successfully added to the system.");
-                    } else {
-                        System.out.println("Ticket system is full, please wait till a customer buys a ticket.");
-                        ticketPool.wait(); // Wait until a customer buys a ticket and frees space
-                    }
+                    ticketPool.addTicket();
                 }
                 Thread.sleep(releaseRate*1000L);
             }

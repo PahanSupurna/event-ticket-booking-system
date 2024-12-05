@@ -9,19 +9,27 @@ public class Main{
         boolean validInput = false;
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("---WELCOME TO THE REAL TIME TICKET BOOKING SYSTEM---");
+        System.out.println("To start the process please press ENTER key.");
+
+        scanner.nextLine();
+
         while(!validInput) {
             try {
-                System.out.println("Enter the total number of tickets. ");
+                System.out.println("---------------------------------------");
+                System.out.print("Enter the total number of tickets : ");
                 int totalTickets = scanner.nextInt();
 
-                System.out.println("Enter the Maximum number of tickets that can be stored. ");
+                System.out.print("Enter the Maximum number of tickets that can be stored : ");
                 int ticketCapacity = scanner.nextInt();
 
-                System.out.println("Enter the ticket retrieval rate. ");
+                System.out.print("Enter the ticket retrieval rate : ");
                 int retrievalRate = scanner.nextInt();
 
-                System.out.println("Enter the ticket release rate. ");
+                System.out.print("Enter the ticket release rate : ");
                 int releaseRate = scanner.nextInt();
+
+                System.out.println("---------------------------------------");
 
                 Configuration configuration = new Configuration(totalTickets, retrievalRate, releaseRate, ticketCapacity);
 
@@ -36,20 +44,20 @@ public class Main{
                     Vendor vendor = new Vendor(ticketPool,configuration); //Create an instance of a vendor class
                     Customer customer = new Customer(ticketPool,configuration); //Creates an instance of a customer class
 
-                        int noOfVendors = 5;
-                        for (int i = 0; i < noOfVendors; i++) {
-                            Thread thread1 = new Thread(vendor);
-                            thread1.start();
-                        }
+                    int noOfVendors = 5;
+                    for (int i = 0; i < noOfVendors; i++) {
+                        Thread thread1 = new Thread(vendor);
+                        thread1.start();
+                    }
 
-                        int noOfCustomers = 5;
-                        for (int i = 0; i < noOfCustomers; i++) {
-                            Thread thread2 = new Thread(customer);
-                            thread2.start();
-                        }
+                    int noOfCustomers = 5;
+                    for (int i = 0; i < noOfCustomers; i++) {
+                        Thread thread2 = new Thread(customer);
+                        thread2.start();
+                    }
 
                 } else {
-                    System.out.println("Inputs are invalid.");
+                    System.out.println(" Inputs are invalid.");
                 }
 
             } catch (InputMismatchException e) {

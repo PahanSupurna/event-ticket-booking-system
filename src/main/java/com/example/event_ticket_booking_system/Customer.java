@@ -14,16 +14,14 @@ public class Customer implements Runnable {
     @Override
     public void run() {
         try {
-            synchronized (ticketPool) {
-                while (ticketPool.getSoldTickets() < totalTickets) {
-                    // Attempt to buy a ticket
+            while (true) {
+                synchronized (ticketPool) {
+                    if (ticketPool.allTicketsSold()) {
+                        break; // Stop if all tickets are sold
+                    }
                     ticketPool.buyTicket();
-                    // Notify any waiting thread that a ticket is available (optional)
-                    ticketPool.notifyAll();
-
-                    // Wait for the next cycle based on retrievalRate
-                    ticketPool.wait(retrievalRate * 1000L);
                 }
+                Thread.sleep(retrievalRate * 1000L);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();  // Handle interrupt properly

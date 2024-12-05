@@ -82,6 +82,7 @@ public class Configuration {
         try(FileWriter fileWriter = new FileWriter("Ticketing_System.json")){
             gson.toJson(this, fileWriter); //Converts to Json and writes in the fille
             System.out.println("Saved ticket information to  Json file.");
+            System.out.println("---------------------------------------");
         }
         catch (IOException e){
             System.out.println("Error occurred during the saving process"+ e.getMessage());
