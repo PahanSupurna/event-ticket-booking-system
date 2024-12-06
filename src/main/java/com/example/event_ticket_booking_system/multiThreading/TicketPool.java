@@ -1,4 +1,4 @@
-package com.example.event_ticket_booking_system;
+package com.example.event_ticket_booking_system.multiThreading;
 
 import java.util.LinkedList;
 import java.util.Queue;

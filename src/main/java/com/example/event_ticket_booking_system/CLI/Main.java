@@ -1,4 +1,9 @@
-package com.example.event_ticket_booking_system;
+package com.example.event_ticket_booking_system.CLI;
+
+import com.example.event_ticket_booking_system.multiThreading.Configuration;
+import com.example.event_ticket_booking_system.multiThreading.Customer;
+import com.example.event_ticket_booking_system.multiThreading.TicketPool;
+import com.example.event_ticket_booking_system.multiThreading.Vendor;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package com.example.event_ticket_booking_system;
+package com.example.event_ticket_booking_system.multiThreading;
 
 public class Customer implements Runnable {
     private final TicketPool ticketPool;

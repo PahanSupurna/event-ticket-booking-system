@@ -1,4 +1,4 @@
-package com.example.event_ticket_booking_system;
+package com.example.event_ticket_booking_system.multiThreading;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
