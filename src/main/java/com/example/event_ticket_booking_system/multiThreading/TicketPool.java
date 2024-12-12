@@ -20,8 +20,8 @@ public class TicketPool {
 
     // Method for adding the tickets to the system by Vendors.
     public synchronized void addTicket() throws InterruptedException{
-        while (soldTickets >= configuration.getTotalTickets()) {
-            notifyAll(); // Notify all threads to avoid deadlock
+        if (soldTickets >= configuration.getTotalTickets()) {
+            System.out.println("All sold");
             return; // Stop further ticket addition
         }
 
@@ -31,12 +31,16 @@ public class TicketPool {
             wait(); //waits till a customer buys a ticket
         }
 
-        ticketNumber ++;
-        String ticket = "Ticket Number " + ticketNumber; //creates the ticket name to display
-        ticketQueue.offer(ticket); //Adds the ticket to the queue
-        System.out.println(ticket + " Successfully added to the system | Number of tickets in the system = "+ ticketQueue.size());
-        System.out.println(" ");
-        notifyAll(); //Notifies the customers about the added tickets.
+        if (ticketNumber <= configuration.getTotalTickets()) {
+            ticketNumber++;
+            String ticket = "Ticket Number " + ticketNumber; //creates the ticket name to display
+            ticketQueue.offer(ticket); //Adds the ticket to the queue
+            System.out.println("Adding | "+ticket + " Successfully added to the system by " + Thread.currentThread().getName() + " | Number of tickets in the system = " + ticketQueue.size());
+            notifyAll();
+        }
+        else{
+            System.out.println("System full");
+        }
     }
 
     // Method for buying tickets in the system by customers.
@@ -49,8 +53,7 @@ public class TicketPool {
 
         String ticket = ticketQueue.poll(); //Removes the ticket from the system
         soldTickets++;
-        System.out.println(ticket + " is successfully purchased | Number of tickets remaining in the system = "+ ticketQueue.size());
-        System.out.println(" ");
+        System.out.println("Buying | "+ticket + " is successfully purchased by " + Thread.currentThread().getName() + "| Number of tickets remaining in the system = "+ ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
 

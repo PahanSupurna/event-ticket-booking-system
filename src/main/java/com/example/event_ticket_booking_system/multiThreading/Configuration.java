@@ -62,11 +62,7 @@ public class Configuration {
             System.out.println("Invalid input! Please enter a positive number.");
             return false;
         }
-        //ticket capacity should be higher than total ticket count.
-        if (totalTickets < ticketCapacity) {
-            System.out.println("Invalid input! Please enter a number smaller than the maximum ticket count.");
-            return false;
-        }
+
         //checks if the ticket release rate is lower than the ticket retrieval rate.
         if (retrievalRate > releaseRate) {
             System.out.println("Invalid input! Ticket release rate should be higher than ticket retrieval rate.");

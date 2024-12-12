@@ -49,16 +49,19 @@ public class Main{
                     Vendor vendor = new Vendor(ticketPool,configuration); //Create an instance of a vendor class
                     Customer customer = new Customer(ticketPool,configuration); //Creates an instance of a customer class
 
-                    int noOfVendors = 5;
-                    for (int i = 0; i < noOfVendors; i++) {
-                        Thread thread1 = new Thread(vendor);
-                        thread1.start();
+                    int numberOfVendors = 5;
+                    Thread[] vendorThreads = new Thread[numberOfVendors];
+                    for (int i = 0; i < numberOfVendors; i++) {
+                        vendorThreads[i] = new Thread(new Vendor(ticketPool, configuration), "Vendor " + (i + 1));
+                        vendorThreads[i].start();
                     }
 
-                    int noOfCustomers = 5;
-                    for (int i = 0; i < noOfCustomers; i++) {
-                        Thread thread2 = new Thread(customer);
-                        thread2.start();
+                    // Start CustomerLogic threads
+                    int numberOfCustomers = 5;
+                    Thread[] customerThreads = new Thread[numberOfCustomers];
+                    for (int i = 0; i < customerThreads.length; i++) {
+                        customerThreads[i] = new Thread(new Customer(ticketPool, configuration), "Customer " + (i + 1));
+                        customerThreads[i].start();
                     }
 
                 } else {

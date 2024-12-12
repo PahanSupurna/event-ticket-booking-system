@@ -2,12 +2,10 @@ package com.example.event_ticket_booking_system.multiThreading;
 
 public class Customer implements Runnable {
     private final TicketPool ticketPool;
-    private final int totalTickets;
     private final int retrievalRate;
 
     public Customer(TicketPool ticketPool, Configuration configuration) {
         this.ticketPool = ticketPool;
-        this.totalTickets = configuration.getTotalTickets();
         this.retrievalRate = configuration.getRetrievalRate();
     }
 
